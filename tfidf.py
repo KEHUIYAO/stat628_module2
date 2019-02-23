@@ -1,42 +1,20 @@
-#%% import packages
-
-
+import json
 import pandas as pd
-import os
-
-
-
-
-fileDir = os.path.dirname(os.path.realpath('__file__'))
-train= os.path.join(fileDir, '../data/review_train.json')
-
-
-# In[10]:
-
-
-train = pd.read_json(train,orient = 'records',lines = True)
-
-
-# In[6]:
-
-
-test = pd.read_json('data/review_test.json',orient = 'records',lines = True)
-
-
-# In[1]:
-
-
 import re
-import numpy as np 
+import numpy as np
 from nltk.stem import WordNetLemmatizer
 from nltk.stem.porter import PorterStemmer
 from nltk import word_tokenize, pos_tag
 from nltk.corpus import wordnet
+train = pd.read_json('..//data//review_train.json',orient = 'records',lines = True,chunksize=10000)
+train=next(train)
+#%%
+# test=pd.read_json('..//data//review_test.json',orient = 'records',lines = True,chunksize=100)
+# test=next(test)
+test=pd.read_json('..//data//review_test.json',orient = 'records',lines = True,chunksize=100)
+test=next(test)
 
-
-# #### Language
-
-# In[ ]:
+#%%
 
 
 def not_language(text):
@@ -46,48 +24,24 @@ def not_language(text):
         return True
     else:
         return False
-
-
-# In[ ]:
-
-
 not_lang_train = train[train.text.apply(not_language)].index.values
-
-
-# In[ ]:
-
-
 train.loc[not_lang_train,'lang_type'] = 'english'
-
-
-# In[ ]:
-
-
 from langdetect import detect
 for i in range(train.shape[0]):
-    if i in not_lang:
+    if i in not_lang_train:
         continue
     else:
         train.loc[i,'lang_type'] = detect(train.text[i])
 
 
-# In[ ]:
 
+#%%
+train_eng = train
 
-train_eng = train[train.lang_type == 'en']
-
-
-# #### Lemmatization
-
-# In[ ]:
-
-
+#%%
 porter = PorterStemmer()
 def tokenizer_porter(text):
     return [porter.stem(word) for word in text.split()]
-
-
-# In[ ]:
 
 
 def get_wordnet_pos(tag):
@@ -101,8 +55,11 @@ def get_wordnet_pos(tag):
         return wordnet.ADV
     else:
         return None
-    
+
+
 wnl = WordNetLemmatizer()
+
+
 def lemmatizer(text):
     tokens = word_tokenize(text)
     lemmas = []
@@ -111,12 +68,6 @@ def lemmatizer(text):
         wordnet_pos = get_wordnet_pos(tag[1]) or wordnet.NOUN
         lemmas.append(wnl.lemmatize(tag[0], pos=wordnet_pos))
     return lemmas
-
-
-# #### Stop-words
-
-# In[ ]:
-
 
 from nltk.corpus import stopwords
 stop = stopwords.words('english')
@@ -133,28 +84,12 @@ for prep in preposition:
     if prep in stop:
         stop.pop(stop.index(prep))
 
-
-# #### Convert n't to not
-
-# In[ ]:
-
-
 def no_abbreviation(text):
     text = re.sub('n\'t',' not',text)
     return text
 
-
-# #### Adversatives
-
-# In[ ]:
-
-
 but = ['yet','however','nonetheless','whereas','nevertheless']
 although = ['although','though','notwithstanding','albeit']
-
-
-# In[ ]:
-
 
 def change_but(text):
     for x in but:
@@ -169,62 +104,59 @@ def change_adversatives(text):
     text = change_although(text)
     return text
 
-
-# In[ ]:
-
-
 def preprocessing(text):
     # 取表情
-    emoticons = re.findall('(?::|;|=)(?:-)?(?:\)|\(|D|P)',text)
+    # emoticons = re.findall('(?::|;|=)(?:-)?(?:\)|\(|D|P)',text)
     # 去回车
     text = re.sub('\\n',' ',text)
     # not
-    text = no_abbreviation(text)
+    # text = no_abbreviation(text)
     # 只保留字母
     text = re.sub('[\W]+',' ', text.lower())
     # 统一转折词
-    text = change_adversatives(text)
+    # text = change_adversatives(text)
     # 词性还原
-    tokens = lemmatizer(text)
-    text = ''
-    for index, token in enumerate(tokens):
-        if token in stop:
-            tokens[index] = ''
-        else:
-            text = text + tokens[index] + ' '
-    return {'text':text,'emoticons':emoticons}
-
-
-# In[ ]:
-
+    # tokens = lemmatizer(text)
+    # text = ''
+    # for index, token in enumerate(tokens):
+        # if token in stop:
+        #     tokens[index] = ''
+        # else:
+        #     text = text + tokens[index] + ' '
+    # return {'text':text,'emoticons':emoticons}
+    return {'text':text}
 
 from tqdm import tqdm, tqdm_pandas
 tqdm.pandas()
 dictionary_train = train_eng.text.progress_apply(preprocessing)
 dictionary_test = test.text.progress_apply(preprocessing)
-
-
-# In[ ]:
-
-
-y = train_eng.loc[dictionary.index]["stars"]
-
-
-# In[ ]:
-
-
 texts_train = [dictionary_train[i]['text'] for i in train_eng.index]
 texts_test = [dictionary_test[i]['text'] for i in test.index]
+y = train_eng.loc[dictionary_train.index]["stars"]
+
+#%%
+# 释放空间
+import gc
+del train_eng
+del test
+del train
+del dictionary_train
+del dictionary_test
+gc.collect()
 
 
-# In[ ]:
+num_train = len(texts_train)
+num_test = len(texts_test)
 
+texts_train.extend(texts_test)
 
-texts = np.append(texts_train,texts_test)
+del texts_test
+gc.collect()
 
+texts = texts_train
 
-# In[ ]:
-
+del texts_train
+gc.collect()
 
 from autocorrect import spell
 
@@ -234,85 +166,107 @@ for i in tqdm(range(len(texts))):
 
 new_texts = new_texts[1:]
 
-
-# In[ ]:
-
-
 result = ['']
 for i in range(len(new_texts)):
     result.append(' '.join(new_texts[i]))
-    
+
 new_texts = result[1:]
 
+new_texts = texts
 
-# #### Bigrams for phrase
-
-# In[ ]:
-
+del texts
+gc.collect()
 
 from gensim.models.phrases import Phrases, Phraser
 
-
-# In[ ]:
-
-
-sentence_stream = [sent.split(' ') for sent in new_texts]
-
-
-# In[ ]:
-
+sentence_stream = [sent.split(' ') for sent in tqdm(new_texts)]
 
 bigram = Phraser(Phrases(sentence_stream, min_count=5, threshold=5)) #mincount越小识别出来的越少，threshold higher means fewer phrases
 
-
-# In[ ]:
-
-
 sentence_with_phrase = bigram[sentence_stream]
 
-
-# In[ ]:
-
-
 result = ['']
-for i in range(len(new_texts)):
+for i in tqdm(range(len(new_texts))):
     result.append(' '.join(bigram[sentence_stream[i]]))
-    
+
 new_texts = result[1:]
 
+del sentence_stream
+del sentence_with_phrase
+del result
+gc.collect()
 
-# #### tf-idf
-
-# In[ ]:
 
 
+
+
+
+#%%
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+tf = TfidfVectorizer(analyzer='word', min_df = 1, lowercase = True)
 
-# In[ ]:
-
-
-tf = TfidfVectorizer(analyzer='word', min_df = 1, lowercase = False)
+response =  tf.fit_transform(new_texts)
 
 
-# In[ ]:
 
-
-response =  tf.fit_transform(new_texts).toarray()
-
-
-# In[ ]:
-
-
-tfidf_train = response[:len(texts_train)]
-tfidf_test = response[len(texts_train):]
-
-
-# In[ ]:
-
-
+feature_name=tf.get_feature_names()
+tfidf_train = response[:num_train]
+tfidf_test = response[num_train:]
+#%%
 from sklearn.linear_model import LogisticRegression
-lr=LogisticRegression(multi_class='multinomial',solver='newton-cg’')
+lr=LogisticRegression(multi_class='multinomial',solver='newton-cg')
 lr.fit(tfidf_train,y)
 y_pred=lr.predict(tfidf_test)
 
+#%%
+from sklearn.model_selection import train_test_split
+import xgboost as xgb
+from xgboost import plot_importance
+from matplotlib import pyplot as plt
+from sklearn.metrics import mean_squared_error
+try:
+    y=y.tolist()
+    y=[x-1 for x in y]
+except:
+    pass
+X_train, X_test, y_train, y_test = train_test_split(tfidf_train, y, test_size=0.3, random_state=0)
+#加载numpy的数组到DMatrix对象
+xg_train = xgb.DMatrix(X_train, label=y_train)
+xg_test = xgb.DMatrix( X_test, label=y_test)
+#1.训练模型
+# setup parameters for xgboost
+param = {}
+# use softmax multi-class classification
+param['objective'] = 'multi:softmax'
+# scale weight of positive examples
+param['eta'] = 0.1
+param['max_depth'] = 3
+param['silent'] = 1
+param['nthread'] = 4
+param['num_class'] = 5
+
+watchlist = [ (xg_train,'train'), (xg_test, 'test') ]
+num_round = 6
+bst = xgb.train(param, xg_train, num_round, watchlist )
+
+pred = bst.predict( xg_test );
+print ('predicting, classification error=%f' % (sum( int(pred[i]) != y_test[i] for i in range(len(y_test))) / float(len(y_test)) ))
+#%%
+#2.probabilities
+# do the same thing again, but output probabilities
+param['objective'] = 'multi:softmax'
+xg_train = xgb.DMatrix(tfidf_train, label=y)
+bst = xgb.train(param, xg_train, num_round, watchlist );
+# Note: this convention has been changed since xgboost-unity
+# get prediction, this is in 1D array, need reshape to (ndata, nclass)
+#%%
+xg_test = xgb.DMatrix(tfidf_test)
+ylabel = bst.predict( xg_test )
+
+
+ylabel=[x for x in ylabel]
+
+#%%
+# plot_importance(bst)
+# plt.show()
