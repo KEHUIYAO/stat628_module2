@@ -34,8 +34,12 @@ print(Y.shape[0]+count)
 #%%
 from sklearn.linear_model import LogisticRegression
 lr=LogisticRegression(multi_class='multinomial',solver='newton-cg')
-trainingXsub=trainingX[:100000,:]
-y=Y[:trainingXsub.shape[0]]
+
+trainingSize=100000
+
+
+trainingXsub=trainingX[:trainingSize,:]
+y=Y[:trainingSize]
 y=y.iloc[:,0].tolist()
 lr.fit(trainingXsub,y)
 index=trainingX.shape[0]-count
@@ -51,15 +55,12 @@ y_pred=ylabel.reshape([-1,1])
 id=id.reshape([-1,1])
 ans=np.hstack((id,y_pred))
 #ans=np.vstack((header,ans))
-np.savetxt("TueG1_submmit2.csv",ans,delimiter=",",fmt="%i,%i")
+
+with open("TueG1_submmit2.csv", 'wb') as f:
+  f.write(b'Id,Expected\n')
+  #f.write(bytes("SP,"+lists+"\n","UTF-8"))
+  #Used this line for a variable list of numbers
+
+  np.savetxt(f,ans,delimiter=",",fmt="%i,%i")
 
 
-#%%
-
-id=np.array(range(1,len(ylabel)+1))
-#header=np.array([["Id","Expected"]])
-y_pred=ylabel.reshape([-1,1])
-id=id.reshape([-1,1])
-ans=np.hstack((id,y_pred))
-#ans=np.vstack((header,ans))
-np.savetxt("TueG1_submmit2.csv",ans,delimiter=",",fmt="%i,%i")

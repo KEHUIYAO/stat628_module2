@@ -11,8 +11,11 @@ train=next(train)
 #%%
 # test=pd.read_json('..//data//review_test.json',orient = 'records',lines = True,chunksize=100)
 # test=next(test)
-test=pd.read_json('..//data//review_test.json',orient = 'records',lines = True,chunksize=100)
-test=next(test)
+#test=pd.read_json('..//data//review_test.json',orient = 'records',lines = True,chunksize=100)
+#test=next(test)
+test=pd.read_json('..//data//review_test.json',orient = 'records',lines = True)
+
+
 
 #%%
 
@@ -267,6 +270,21 @@ ylabel = bst.predict( xg_test )
 
 ylabel=[x for x in ylabel]
 
+
 #%%
-# plot_importance(bst)
-# plt.show()
+ylabel=np.array(ylabel)
+id=np.array(range(1,len(ylabel)+1))
+#header=np.array([["Id","Expected"]])
+y_pred=ylabel.reshape([-1,1])
+id=id.reshape([-1,1])
+ans=np.hstack((id,y_pred))
+#ans=np.vstack((header,ans))
+
+with open("TueG1_submmit2.csv", 'wb') as f:
+  f.write(b'Id,Expected\n')
+  #f.write(bytes("SP,"+lists+"\n","UTF-8"))
+  #Used this line for a variable list of numbers
+
+  np.savetxt(f,ans,delimiter=",",fmt="%i,%i")
+
+
