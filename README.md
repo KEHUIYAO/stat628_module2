@@ -4,9 +4,9 @@
 
 The repository contains two parts of data analysis based on the Yelp dataset. The first part is building a recommedation system for the merchants and users on Yelp based on the business attributes and the reviews. The second part is building a deep learning model to predict the ratings of each review based on the five million training text reviews and their related ratings. 
 
-* a folder called **recommendation system**, which contains all of our work in part one.
+* a folder called **code**, containing two folders:a folder called **recommendation system**, which contains all of our work in part one, a folder called **reviews predict ratings**, which contains all of our work in part two.
 
-* a folder called **reviews predict ratings**, which contains all of our work in part two.
+* a folder called **data**, contains raw data in json and cleaned data in csv.
 
 * a folder called **report**, which contains our report combining our results both in part one and part two.
 
