@@ -24,4 +24,4 @@ The repository contains two parts of data analysis based on the Yelp dataset. Th
 ![](/img/yrs_4.png)
 
 ## Score of our kaggle competition
-
+![](/img/kaggle.png)
