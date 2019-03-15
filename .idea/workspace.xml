@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1164f9a5-dcd2-45b4-9fe1-50b0ae5d8584" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/business_classification.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/business_classification.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/business_data_analysis.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/business_data_analysis.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/feature prepare.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/feature prepare.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recommendation system/src/business_data_analysis-Copy1.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/recommendation system/src/business_data_analysis-Copy1.ipynb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -36,8 +33,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/xgboost/core.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="19">
               <caret line="106" selection-start-line="106" selection-end-line="106" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/recommendation system/src/xgboost_kruskal.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1934">
+              <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
             </state>
           </provider>
         </entry>
@@ -45,20 +51,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/xgboost/sklearn.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
+            <state relative-caret-position="3724">
               <caret line="207" selection-start-line="207" selection-end-line="207" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/tfidf_without_preprocessing.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="532">
-              <caret line="31" column="33" lean-forward="true" selection-start-line="21" selection-end-line="31" selection-end-column="33" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -90,6 +84,7 @@
         <option value="$PROJECT_DIR$/logistic regression_for_sparse_matrix.py" />
         <option value="$PROJECT_DIR$/tfidf.py" />
         <option value="$PROJECT_DIR$/tfidf_without_preprocessing" />
+        <option value="$PROJECT_DIR$/recommendation system/src/xgboost_kruskal.py" />
       </list>
     </option>
   </component>
@@ -104,6 +99,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -111,11 +107,21 @@
               <item name="stat628_module2" type="b2602c69:ProjectViewProjectNode" />
               <item name="stat628_module2" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="stat628_module2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="stat628_module2" type="462c0819:PsiDirectoryNode" />
+              <item name="recommendation system" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="stat628_module2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="stat628_module2" type="462c0819:PsiDirectoryNode" />
+              <item name="recommendation system" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -315,17 +321,18 @@
       <workItem from="1550946447230" duration="3188000" />
       <workItem from="1550952944378" duration="16282000" />
       <workItem from="1551043082212" duration="2969000" />
+      <workItem from="1552677910409" duration="67000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="51008000" />
+    <option name="totallyTimeSpent" value="51075000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1633" height="1053" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21777777" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22031745" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -364,74 +371,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tfidf.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="607">
-          <caret line="84" column="94" selection-start-line="78" selection-start-column="14" selection-end-line="84" selection-end-column="94" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/logistic regression_for_sparse_matrix.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1197">
-          <caret line="66" selection-start-line="48" selection-end-line="66" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xgboost_for_sparse_matrix.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1292">
-          <caret line="71" column="21" selection-start-line="71" selection-start-column="21" selection-end-line="71" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tfidf_without_preprocessing">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="703">
-          <caret line="46" column="64" lean-forward="true" selection-start-line="36" selection-end-line="46" selection-end-column="64" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/tfidf.py" />
+    <entry file="file://$PROJECT_DIR$/logistic regression_for_sparse_matrix.py" />
+    <entry file="file://$PROJECT_DIR$/xgboost_for_sparse_matrix.py" />
+    <entry file="file://$PROJECT_DIR$/tfidf_without_preprocessing" />
+    <entry file="file://$PROJECT_DIR$/business_attributes_data_formatting.py" />
+    <entry file="file://$PROJECT_DIR$/tfidf_without_preprocessing.py" />
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/xgboost/core.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="19">
           <caret line="106" selection-start-line="106" selection-end-line="106" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/business_attributes_data_formatting.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-798">
-          <caret line="10" column="35" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/xgboost/sklearn.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
+        <state relative-caret-position="3724">
           <caret line="207" selection-start-line="207" selection-end-line="207" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tfidf_without_preprocessing.py">
+    <entry file="file://$PROJECT_DIR$/recommendation system/src/xgboost_kruskal.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="31" column="33" lean-forward="true" selection-start-line="21" selection-end-line="31" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-1934">
+          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
         </state>
       </provider>
     </entry>
