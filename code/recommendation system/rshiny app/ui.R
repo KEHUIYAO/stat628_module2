@@ -6,7 +6,9 @@ ui = shinyUI(pageWithSidebar(
   
   sidebarPanel(
     numericInput("B_id", "Business ID:", min = 0, max = 100000000, value = NA),
-    helpText("Enter the business ID you want to query"),
+    helpText("Enter the business ID you want to search"),
+    textInput("city", "City Name:", value = NA),
+    helpText("If you don't know which store, you can search by city"),
     submitButton("Search"),
     
     h3('Any issue?'),
@@ -18,7 +20,7 @@ ui = shinyUI(pageWithSidebar(
     ),
   
   mainPanel(tabsetPanel(
-    tabPanel("Resturant Customer Review", imageOutput("review_dist"), textOutput("cheating")),
+    tabPanel("Resturant Customer Review", textOutput("name"), imageOutput("review_dist"), textOutput("cheating")),
     tabPanel("Recommendation for Customer", tableOutput("text"), tableOutput("recommendation")),
     tabPanel("Suggestions for Resturant", tableOutput("suggestions")),
     tabPanel("Resturant Nearby", leafletOutput("map"))
